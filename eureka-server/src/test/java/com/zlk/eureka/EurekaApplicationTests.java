@@ -1,4 +1,4 @@
-package com.example.eureka;
+package com.zlk.eureka;
 
 
 import org.springframework.boot.test.context.SpringBootTest;
