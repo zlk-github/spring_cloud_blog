@@ -1,5 +1,15 @@
 ## eureka服务注册中心
 
+### 介绍
+
+    注册中心主要提供注册与发现功能。
+    
+    Spring Cloud Eureka是Spring Cloud Netfix(核心组件)中的一部分，
+    主要负责微服务框架的服务治理功能。注册中心主要提供注册与发现功能，
+    服务提供者提供服务，服务消费者消费服务。其具有Spring Boot风格的自动化配置。
+
+相关配置详情见"Spring Cloud Eureka配置详解"。
+
 ### 版本说明
 
     1.Spring Boot 2.1.10
