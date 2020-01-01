@@ -93,6 +93,6 @@ hosts文件： 加入以下
 
 ### 4.打包jar，启动peer1,peer2注册中心到注册中心集群
 	
-	1.java -jar eureka-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer1
-	2.java -jar eureka-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer2
-	3.java -jar eureka-1.0.0-SNAPSHOT.jar
+	1.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer1
+	2.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer2
+	3.java -jar eureka-server-1.0.0-SNAPSHOT.jar
