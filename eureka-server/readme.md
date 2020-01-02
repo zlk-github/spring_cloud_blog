@@ -48,7 +48,7 @@ hosts文件： 加入以下
     # ip  注册中心ip地址=主机名称
     eureka.instance.hostname=peer1
     
-    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为false。
+    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为true。
     # eureka.client.register-with-eureka=true
     # 客户端是否获取eureka服务器注册表上的注册信息，默认为true
     # eureka.client.fetch-registry=true
@@ -72,7 +72,7 @@ hosts文件： 加入以下
     #ip 注册中心ip地址=主机名称
     eureka.instance.hostname=peer2
     
-    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为false。
+    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为true。
     # eureka.client.register-with-eureka=true
     # 客户端是否获取eureka服务器注册表上的注册信息，默认为true
     # eureka.client.fetch-registry=true
