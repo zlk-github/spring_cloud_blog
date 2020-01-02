@@ -106,4 +106,9 @@ hosts文件： 加入以下
 	打包命令：mvn clean package
 	1.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer1
 	2.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer2
-	3.java -jar eureka-server-1.0.0-SNAPSHOT.jar
+
+效果如图：	
+![Alt text](./images/peer1.jpg)
+![Alt text](./images/peer2.jpg)
+
+
