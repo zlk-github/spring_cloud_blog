@@ -14,21 +14,68 @@
     3.JDK 1.8
     4.MAVEN 3.3.9
     
-### 1.主要说明
+    
+### 1.peer1与peer2为域名，在本地测试加
+    
+hosts文件： 加入以下
+  
+    127.0.0.1  peer1
+    127.0.0.1  peer2
+        
+### 2.主要说明
 
-**1.1** 启动类加@EnableConfigServer注解
+**2.1** 启动类加注解
 
-**1.2** pom.xml引入
+    @EnableDiscoveryClient 将服务注册到注册中心
+    @EnableConfigServer  配置中心注解
+
+**2.2** pom.xml引入
 	
 	   <!--config 统一配置中心-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-        </dependency> 
+        </dependency>
+        <!--euraka 2.0(spring boot 2.0+)注册中心-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+        </dependency>
+        <!--加权限-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+  
+### 3.加密保证git上配置安全（参考https://segmentfault.com/a/1190000011680775）
 
-### 3.高可用注册中心（peer1,peer2互相为对方注册中心）
+application.properties加入
+    
+    # 拦截url,输入上一步设置的用户名和密码后才能获取到，否则页面会报404
+    spring.security.user.name=root_zzz
+    spring.security.user.password=123456 
 
-**3.1** application.properties
+pom.xml引入（上面已引入，此处为说明）
+
+    <!--加权限-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+  
+  
+**3.1** 下载并解压JCE
+    
+    下载：JAVA8 JCE 地址： java8 JCE下载地址（https://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html）
+    上述链接下载解压后拷贝到 JDK/jre/lib/security 目录下覆盖文件 (whichever version of JRE/JDK x64/x86 you are using)
+
+**3.2** 下载并解压JCE 
+    
+    
+
+### 4.高可用注册中心（peer1,peer2互相为对方注册中心）
+
+**4.1** application.properties
 
 	# 服务名称
 	spring.application.name=eureka-service
@@ -47,53 +94,3 @@
 	# peer1、peer2为主机名称。
 	# 可以直接使用主机ip，需要配置参数eureka.instance.preferIpAddressTrue=true,默认为flase。
 
-**3.2** application-peer1.properties
-
-	# 服务名称
-	spring.application.name=eureka-service
-	# 端口
-	server.port= 1111
-	
-	# ip  注册中心ip地址=主机名称
-	eureka.instance.hostname=peer1
-	
-	# 向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 检索服务。
-	eureka.client.fetch-registry=true
-	# 将注册中心peer1注册给peer2
-	eureka.client.serviceUrl.defaultZone=http://peer2:2222/eureka/
-	
-	# 关闭保护机制
-	eureka.server.enable-self-preservation=false
-	#剔除失效服务间隔
-	eureka.server.eviction-interval-timer-in-ms=2000
-
-**3.3** application-peer1.properties
-
-	# 服务名称
-	spring.application.name=eureka-service
-	#端口
-	server.port= 2222
-	
-	#ip 注册中心ip地址=主机名称
-	eureka.instance.hostname=peer2
-	
-	# 向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 检索服务。
-	eureka.client.fetch-registry=true
-	# 将注册中心peer2注册给peer1
-	eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/
-	
-	# 关闭保护机制
-	eureka.server.enable-self-preservation=false
-	#剔除失效服务间隔
-	eureka.server.eviction-interval-timer-in-ms=2000
-
-### 4.打包jar，启动peer1,peer2注册中心到注册中心集群
-
-	打包命令：mvn clean package
-	1.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer1
-	2.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer2
-	3.java -jar eureka-server-1.0.0-SNAPSHOT.jar
