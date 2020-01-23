@@ -6,6 +6,11 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 import java.util.logging.Logger;
 
+/**
+ * @Description 高可用注册中心
+ * @author zlk
+ * @date 2020-01-02 15:18:01
+ */
 @EnableEurekaServer
 @SpringBootApplication
 public class EurekaApplication {

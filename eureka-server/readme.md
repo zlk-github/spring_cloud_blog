@@ -38,72 +38,61 @@ hosts文件： 加入以下
 
 ### 3.高可用注册中心（peer1,peer2互相为对方注册中心）
 
-**3.1** application.properties
+**3.1** application-peer1.properties
 
 	# 服务名称
-	spring.application.name=eureka-service
-	
-	# 端口
-	server.port= 1001
-	
-	# 此应用为注册中心，false：不向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 注册中心职责是维护服务实例，false：不检索服务。
-	eureka.client.fetch-registry=true
-	
-	#高可用注册中心
-	eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/;http://peer2:2222/eureka/
-	
-	# peer1、peer2为主机名称。
-	# 可以直接使用主机ip，需要配置参数eureka.instance.preferIpAddressTrue=true,默认为flase。
+    spring.application.name=eureka-service
+    # 端口
+    server.port= 1111
+    
+    # ip  注册中心ip地址=主机名称
+    eureka.instance.hostname=peer1
+    
+    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为true。
+    # eureka.client.register-with-eureka=true
+    # 客户端是否获取eureka服务器注册表上的注册信息，默认为true
+    # eureka.client.fetch-registry=true
+    
+    # 将注册中心peer1注册给peer2
+    eureka.client.serviceUrl.defaultZone=http://peer2:2222/eureka/
+    
+    # 关闭保护机制
+    eureka.server.enable-self-preservation=false
+    #剔除失效服务间隔
+    eureka.server.eviction-interval-timer-in-ms=2000
 
-**3.2** application-peer1.properties
 
-	# 服务名称
-	spring.application.name=eureka-service
-	# 端口
-	server.port= 1111
-	
-	# ip  注册中心ip地址=主机名称
-	eureka.instance.hostname=peer1
-	
-	# 向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 检索服务。
-	eureka.client.fetch-registry=true
-	# 将注册中心peer1注册给peer2
-	eureka.client.serviceUrl.defaultZone=http://peer2:2222/eureka/
-	
-	# 关闭保护机制
-	eureka.server.enable-self-preservation=false
-	#剔除失效服务间隔
-	eureka.server.eviction-interval-timer-in-ms=2000
-
-**3.3** application-peer1.properties
+**3.2** application-peer2.properties
 
 	# 服务名称
-	spring.application.name=eureka-service
-	#端口
-	server.port= 2222
-	
-	#ip 注册中心ip地址=主机名称
-	eureka.instance.hostname=peer2
-	
-	# 向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 检索服务。
-	eureka.client.fetch-registry=true
-	# 将注册中心peer2注册给peer1
-	eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/
-	
-	# 关闭保护机制
-	eureka.server.enable-self-preservation=false
-	#剔除失效服务间隔
-	eureka.server.eviction-interval-timer-in-ms=2000
+    spring.application.name=eureka-service
+    #端口
+    server.port= 2222
+    
+    #ip 注册中心ip地址=主机名称
+    eureka.instance.hostname=peer2
+    
+    # 指示此实例是否应将其信息注册到eureka服务器以供其他服务发现，默认为true。
+    # eureka.client.register-with-eureka=true
+    # 客户端是否获取eureka服务器注册表上的注册信息，默认为true
+    # eureka.client.fetch-registry=true
+    # 将注册中心peer2注册给peer1
+    eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/
+    
+    # 关闭保护机制
+    eureka.server.enable-self-preservation=false
+    #剔除失效服务间隔
+    eureka.server.eviction-interval-timer-in-ms=2000
+
 
 ### 4.打包jar，启动peer1,peer2注册中心到注册中心集群
 
 	打包命令：mvn clean package
 	1.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer1
 	2.java -jar eureka-server-1.0.0-SNAPSHOT.jar  --spring.profiles.active=peer2
-	3.java -jar eureka-server-1.0.0-SNAPSHOT.jar
+
+效果如图：	
+![Alt text](./images/peer1.jpg)
+![Alt text](./images/peer2.jpg)
+
+
