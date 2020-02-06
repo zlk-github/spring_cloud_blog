@@ -46,7 +46,7 @@ hosts文件： 加入以下
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         
- **3.2** application-peer1.properties  
+ **3.2** application.properties  
  
     # 服务名称
     spring.application.name=config-server
@@ -107,24 +107,6 @@ pom.xml引入（上面已引入，此处为说明）
     
     
 
-### 4.高可用注册中心（peer1,peer2互相为对方注册中心）
+### 4.
 
-**4.1** application.properties
-
-	# 服务名称
-	spring.application.name=eureka-service
-	
-	# 端口
-	server.port= 1001
-	
-	# 此应用为注册中心，false：不向注册中心注册自己。
-	eureka.client.register-with-eureka=true
-	# 注册中心职责是维护服务实例，false：不检索服务。
-	eureka.client.fetch-registry=true
-	
-	#高可用注册中心
-	eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/;http://peer2:2222/eureka/
-	
-	# peer1、peer2为主机名称。
-	# 可以直接使用主机ip，需要配置参数eureka.instance.preferIpAddressTrue=true,默认为flase。
 
